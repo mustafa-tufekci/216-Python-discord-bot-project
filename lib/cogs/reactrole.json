@@ -6,33 +6,27 @@
         "message_id": 923993916259311636
     },
     {
-        "role_name": "Games",
-        "role_id": 906212783299895306,
-        "emoji": "\ud83c\udfae",
-        "message_id": 924001222355218482
+        "role_name": "Red",
+        "role_id": 905516061464596482,
+        "emoji": "\ud83d\udd34",
+        "message_id": 928035947231199242
     },
     {
-        "role_name": "Games",
-        "role_id": 906212783299895306,
-        "emoji": "\ud83c\udfae",
-        "message_id": 924001294681796688
+        "role_name": "Red",
+        "role_id": 905516061464596482,
+        "emoji": "\ud83d\udd34",
+        "message_id": 928036752172654632
     },
     {
-        "role_name": "Games",
-        "role_id": 906212783299895306,
-        "emoji": "\ud83c\udfae",
-        "message_id": 924001334171152424
+        "role_name": "Red",
+        "role_id": 905516061464596482,
+        "emoji": "\ud83d\udd34",
+        "message_id": 928037346115473419
     },
     {
-        "role_name": "Blue",
-        "role_id": 905515952727269429,
-        "emoji": "\ud83d\udc99",
-        "message_id": 924002562967994428
-    },
-    {
-        "role_name": "Blue",
-        "role_id": 905515952727269429,
-        "emoji": "\ud83d\udc99",
-        "message_id": 924003526949093496
+        "role_name": "Red",
+        "role_id": 905516061464596482,
+        "emoji": "\ud83d\udd34",
+        "message_id": 928037613548490783
     }
 ]

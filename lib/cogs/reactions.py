@@ -10,6 +10,12 @@ from ..db import db
 numbers = ("1️⃣", "2⃣", "3⃣", "4⃣", "5⃣",
 		   "6⃣", "7⃣", "8⃣", "9⃣", "🔟")
 
+
+reaction_json_path = "C:/Users/MUSTAFA/Documents/GitHub/216-Discord-bot/lib/cogs/reactrole.json"
+
+intents = discord.Intents.default()
+intents.members = True
+
 class Reactions(Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -28,25 +34,26 @@ class Reactions(Cog):
             self.starboard_channel = self.bot.get_channel(919366806278381578)
             self.bot.cogs_ready.ready_up("reactions")
     
-    # @command()
-    # @has_permissions(administrator=True, manage_roles=True)
-    # async def reactrole(self, ctx, emoji, role: discord.Role,*,message):
-    #     embed = discord.Embed(description=message)
-    #     msg = await ctx.channel.send(embed=embed)
-    #     await msg.add_reaction(emoji)
+    @command()
+    @has_permissions(administrator=True, manage_roles=True)
+    async def reactrole(self, ctx, emoji, role: discord.Role,*,message):
+        embed = discord.Embed(description=message)
+        msg = await ctx.channel.send(embed=embed)
+        await msg.add_reaction(emoji)
 
-    #     with open('C:/Users/MUSTAFA/Desktop/updated-discord.py-tutorial-EP-5/lib/cogs/reactrole.json') as json_file:
-    #         data = json.load(json_file)
+        
+        with open("C:/Users/MUSTAFA/Documents/GitHub/216-Discord-bot/lib/cogs/reactrole.json") as json_file:
+            data = json.load(json_file)
 
-    #         new_react_role = {'role_name': role.name, 
-    #         'role_id': role.id,
-    #         'emoji': emoji,
-    #         'message_id': msg.id}
+            new_react_role = {'role_name': role.name, 
+            'role_id': role.id,
+            'emoji': emoji,
+            'message_id': msg.id}
 
-    #         data.append(new_react_role)
+            data.append(new_react_role)
 
-    #     with open('C:/Users/MUSTAFA/Desktop/updated-discord.py-tutorial-EP-5/lib/cogs/reactrole.json', 'w') as f:
-    #         json.dump(data, f, indent=4)
+        with open("C:/Users/MUSTAFA/Documents/GitHub/216-Discord-bot/lib/cogs/reactrole.json", 'w') as f:
+            json.dump(data, f, indent=4)
     
 
 
@@ -95,6 +102,14 @@ class Reactions(Cog):
             await payload.member.remove_roles(*current_colours, reason="Colour role reaction.")
             await payload.member.add_roles(self.colours[payload.emoji.name], reason="Colour role reaction.")
             # await self.reaction_message.remove(payload.emoji, payload.member)
+
+            with open("C:/Users/MUSTAFA/Documents/GitHub/216-Discord-bot/lib/cogs/reactrole.json") as react_file:
+                data = json.load(react_file)
+                for x in data:
+                    if x['emoji'] == payload.emoji.name:
+                        role = discord.utils.get(self.bot.get_guild(payload.guild_id).roles, id=x['role_id'])
+
+                        await payload.member.add_roles(role)
         
         # it's this basically written asese for us grab the message every single reaction only cross the message if it needs to
         elif payload.message_id in (poll[1] for poll in self.polls):
@@ -140,25 +155,17 @@ class Reactions(Cog):
             else:
                     await message.remove_reaction(payload.emoji, payload.member)
         
-        # elif payload.message_id == self.reaction_message.id:
-        #     with open('C:/Users/MUSTAFA/Desktop/updated-discord.py-tutorial-EP-5/lib/cogs/reactrole.json') as react_file:
-        #         data = json.load(react_file)
-        #         for x in data:
-        #             if x['emoji'] == payload.emoji.name:
-        #                 role = discord.utils.get(self.bot.get_guild(payload.guild_id).roles, id=x['role_id'])
 
-        #                 await payload.member.add_roles(role)
-
-    # @command()
-    # async def on_raw_reaction_remove(self, payload):
-    #     with open('C:/Users/MUSTAFA/Desktop/updated-discord.py-tutorial-EP-5/lib/cogs/reactrole.json') as react_file:
-    #         data = json.load(react_file)
-    #         for x in data:
-    #             if x['emoji'] == payload.emoji.name:
-    #                 role = discord.utils.get(self.bot.get_guild(
-    #                     payload.guild_id).roles, id=x['role_id'])
+    @command()
+    async def on_raw_reaction_remove(self, payload):
+        with open("C:/Users/MUSTAFA/Documents/GitHub/216-Discord-bot/lib/cogs/reactrole.json") as react_file:
+            data = json.load(react_file)
+            for x in data:
+                if x['emoji'] == payload.emoji.name:
+                    role = discord.utils.get(self.bot.get_guild(
+                        payload.guild_id).roles, id=x['role_id'])
                     
-    #                 await self.bot.get_guild(payload.guild_id).get_member(payload.user_id).remove_roles(role)
+                    await self.bot.get_guild(payload.guild_id).get_member(payload.user_id).remove_roles(role)
     
     @command()
     async def show_rules(self, ctx):
